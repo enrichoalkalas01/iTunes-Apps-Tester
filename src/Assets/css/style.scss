@@ -1,0 +1,272 @@
+#iTunes {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    font-family: sans-serif;
+    overflow: hidden;
+
+    .main-content {
+        width: 50%;
+        height: 100%;
+        position: relative;
+        padding: 0 25px;
+        background-color: #2c2c2c;
+        margin: auto;
+        color: #fff;
+        .box-content {
+            width: auto;
+            height: 100%;
+            padding: 15px 10px;
+            position: relative;
+            &.search-box {
+                height: auto !important;
+                padding-top: 5%;
+                .search-bar {
+                    width: 100%;
+                    height: auto !important;
+                    position: relative;
+                    display: flex;
+                    input {
+                        width: 85%;
+                        margin-right: 10px;
+                        outline: none;
+                        background-color: #f1f1f1;
+                        border: none;
+                        border-radius: 10px;
+                        padding: 10px 25px;
+                    }
+    
+                    button {
+                        width: 15%;
+                        outline: none;
+                        background-color: #f1f1f1;
+                        border: none;
+                        border-radius: 10px;
+                        padding: 5px 10px;
+                        font-size: 10px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &.list-music {
+                width: auto;
+                height: 100%;
+                padding: 5px 10px;
+                position: relative;
+                // background-color: #dedede;
+
+                .box-music-list {
+                    width: auto;
+                    height: auto;
+                    position: relative;
+                    padding: 10px 5px;
+                    margin: 5px 0;
+                    display: flex;
+                    flex-basis: auto;
+                    justify-content: flex-start;
+                    align-items: center;
+                    cursor: pointer;
+                    border-top: 1px solid rgba(35,35,35,0.15);
+                    border-bottom: 1px solid rgba(35,35,35,0.15);
+
+                    .images-box {
+                        .images {
+                            width: 75px;
+                            height: 75px;
+                            position: relative;
+                            background-color: #dedede;
+                            border-radius: 10px;
+                            background-repeat: no-repeat;
+                            background-size: auto;
+                            background-position: center;
+                        }
+                    }
+
+                    .desc-box {
+                        width: 65%;
+                        display: flex;
+                        flex-direction: column;
+                        margin-left: 20px;
+                        .title {
+                            margin: 0;
+                            margin-bottom: 5px;
+                        }
+
+                        .artist {
+                            font-size: 14px;
+                            margin-bottom: 5px;
+                        }
+
+                        .album {
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+
+            &.music-player {
+                position: absolute;
+                height: auto;
+                bottom: 0;
+                width: 85%;
+                left: 50%;
+                transform: translateX(-50%);
+                .wrapper-music-player {
+                    width: 100%;
+                    height: auto;
+                    position: absolute;
+                    padding: 15px;
+                    bottom: -100px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #4d4d4d;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    visibility: hidden;
+                    &.active {
+                        visibility: visible;
+                        bottom: 0;
+                        transition: .25s;    
+                    }
+
+                    &.hide {
+                        visibility: hidden;
+                        bottom: -100px;
+                        transition: .25s;    
+                    }
+
+                    .wrapper-box {
+                        width: 100%;
+                        height: auto;
+                        display: flex;
+                        align-items: center;
+                        .image-music {
+                            margin-right: 10px;
+                            .image {
+                                width: 50px;
+                                height: 50px;
+                                background-color: #dedede;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                background-size: auto;
+                                border-radius: 5px;
+                            }
+                        }
+                
+                        .box-player {
+                            width: 100%;
+                            .description-music {
+                                overflow: hidden;
+                                .title-player {
+                                    width: 100%;
+                                    height: auto;
+                                    font-size: 14px;
+                                    margin: 0;
+                                }
+    
+                                .artist-name {
+                                    width: 100%;
+                                    height: auto;
+                                    font-size: 10px;
+                                    display: flex;
+                                    p {
+                                        margin: 0;
+                                        margin-right: 2.5px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .player-music {
+                        width: 100%;
+                        height: auto;
+                        position: relative;
+                        padding: 10px 0;
+
+                        .range-box {
+                            width: 100%;
+                            height: auto;
+                            position: relative;
+
+                            input {
+                                width: 100%;
+                            }
+                        }
+
+                        .button-box {
+                            width: 100%;
+                            position: relative;
+                            display: flex;
+                            padding: 5px 0;
+                            padding-bottom: 0;
+                            button {
+                                width: 100%;
+                                height: auto;
+                                margin: 0 10px;
+                                padding: 10px 10px;
+                                border-radius: 10px;
+                                border: none;
+                                outline: none;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.button-play-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #ffff;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 3px 3px 5px rgba(25, 25, 25, 0.5);
+}
+
+.triangle-button {
+    width: 0px;
+    height: 0px;
+    border-top: 7.5px solid transparent;
+    border-bottom: 7.5px solid transparent;
+    border-left: 7.5px solid rgba(25, 25, 25, 0.5);
+}
+
+.wrapper-list {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    visibility: visible;
+}
+
+.box-music-list {
+    .button-play-circle {
+        position: absolute;
+        top: 50%;
+        right: 2.5%;
+        transform: translateY(-50%);
+    }
+}
+
+::-webkit-scrollbar-track {
+    background: #2c2c2c !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0.5); 
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
