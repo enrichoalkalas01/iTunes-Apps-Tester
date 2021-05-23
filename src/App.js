@@ -10,6 +10,7 @@ class App extends React.Component {
         SearchValue: '',
         LimitMusic: 25,
         IndexPlayer: 0,
+        ListMusic: null,
         MusicPlayer: false,
         PLayFast: false,
         Duration: 0,
@@ -23,6 +24,7 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
+        let DataIdMusic = []
         this.MusicDefault()
 
         Axios(this.state.Config).then((response) => {
@@ -30,12 +32,23 @@ class App extends React.Component {
             this.setState({ 
                 ResultData: response.data,
             })
+
+            for ( let i = 0; i < response.data.results.length; i++ ) {
+                DataIdMusic[i] = response.data.results[i].collectionId
+            }
+
+            setTimeout(() => {
+                this.setState({
+                    ListMusic: DataIdMusic
+                })
+            }, 25)
         }).catch((error) => {
             console.log(error)
         })
     }
 
     componentDidUpdate = (prevProps, prevState) => {
+        console.log(this.state.ListMusic)
         if ( prevState.SearchValue !== this.state.SearchValue ) {
             this.setState({
                 ...this.state,
