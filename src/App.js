@@ -24,6 +24,7 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
+        this.StopSong()
         let DataIdMusic = []
 
         Axios(this.state.Config).then((response) => {
@@ -90,12 +91,20 @@ class App extends React.Component {
 
     SearchValue = () => {
         let SearchData = document.getElementById('search-bar').value
-        this.setState({ SearchValue: SearchData })
+        this.setState({ SearchValue: SearchData, MusicPlayer: false })
+        this.StopSong()
+    }
+
+    OnEnterKey = (e) => {
+        if ( e.key === 'Enter' ) {
+            this.SearchValue()
+        }
     }
 
     TrackClick = (track) => {
         track.preventDefault()
         let indexList = track.currentTarget.getAttribute('indexdata') // For Get Index List Music
+        console.log(indexList)
         this.setState({
             DetailData: this.state.ResultData.results[indexList],
             MusicPlayer: true,
@@ -106,15 +115,10 @@ class App extends React.Component {
             this.state.Song.src = this.state.DetailData.previewUrl 
         }, 5)
         setTimeout(() => { this.PlaySong() }, 10)
-
-        
-        
-        // document.querySelector('.box-music-list .button-play-wave').classList.remove('hide')
     }
 
     PlaySong = () => {
-        // this.state.Song.play()
-        console.log('Index Player : ', this.state.IndexPlayer)
+        this.state.Song.play()
     }
 
     StopSong = () => {
@@ -135,7 +139,35 @@ class App extends React.Component {
     }
 
     NextButton = () => {
-        
+        if ( this.state.IndexPlayer < this.state.LimitMusic ) {
+            let indexData = Number(this.state.IndexPlayer) + 1
+            if ( indexData < this.state.LimitMusic ) {
+                this.setState({
+                    DetailData: this.state.ResultData.results[indexData],
+                    IndexPlayer: indexData
+                })
+    
+                setTimeout(() => { 
+                    this.state.Song.src = this.state.DetailData.previewUrl 
+                }, 5)
+                setTimeout(() => { this.PlaySong() }, 10)
+            }
+        }
+    }
+
+    PrevButton = () => {
+        let indexData = Number(this.state.IndexPlayer - 1)
+        if ( indexData >= 0 ) {
+            this.setState({
+                DetailData: this.state.ResultData.results[indexData],
+                IndexPlayer: indexData
+            })
+
+            setTimeout(() => { 
+                this.state.Song.src = this.state.DetailData.previewUrl 
+            }, 5)
+            setTimeout(() => { this.PlaySong() }, 10)
+        }
     }
 
     CloseMediaPlayer = () => {
@@ -151,7 +183,7 @@ class App extends React.Component {
                 <div className="main-content">
                     <div className="box-content search-box">
                         <div className="search-bar">
-                            <input name="search-bar" id="search-bar" placeholder="search your music.." />
+                            <input onKeyDown={ this.OnEnterKey } name="search-bar" id="search-bar" placeholder="search your music.." />
                             <button type="button" onClick={ this.SearchValue }>Search</button>
                         </div>
                     </div>
@@ -164,7 +196,7 @@ class App extends React.Component {
                                 this.state.ResultData !== null ?
                                     this.state.ResultData.results.map((Data, index) => {
                                         // Displaying For Data Who Has A Preview Audio URL
-                                        if ( Data.hasOwnProperty('previewUrl')) {
+                                        // if ( Data.hasOwnProperty('previewUrl')) {
                                             return(
                                                 <ListMusic
                                                     key={ index }
@@ -177,7 +209,7 @@ class App extends React.Component {
                                                     trackClick={ this.TrackClick }
                                                 />
                                             )
-                                        }
+                                        // }
                                     })
                                 : <ListMusic />
                             }
@@ -208,10 +240,10 @@ class App extends React.Component {
                                     <input type="range" id="music-duration" defaultValue="0" min="0"/>
                                 </div>
                                 <div className="button-box">
-                                    <button id="prev" className="prev">Prev</button>
+                                    <button onClick={ this.PrevButton } id="prev" className="prev">Prev</button>
                                     <button onClick={ this.PauseButton } id="pause" className="pause">Pause</button>
                                     <button onClick={ this.PlayButton } id="play" className="play">Play</button>
-                                    <button id="next" onClick={ this.NextButton } className="next">Next</button>
+                                    <button onClick={ this.NextButton } id="next" className="next">Next</button>
                                 </div>
                             </div>
                             <div className="close-button" onClick={ this.CloseMediaPlayer }>X</div>
