@@ -78,6 +78,14 @@
             background-repeat: no-repeat;
             background-size: auto;
             background-position: center; }
+            @media screen and (max-width: 475px) {
+              #iTunes .main-content .box-content.list-music .box-music-list .images-box .images {
+                width: 50px;
+                height: 50px; } }
+            @media screen and (max-width: 375px) {
+              #iTunes .main-content .box-content.list-music .box-music-list .images-box .images {
+                width: 45px;
+                height: 45px; } }
           #iTunes .main-content .box-content.list-music .box-music-list .desc-box {
             width: 65%;
             display: -webkit-box;
@@ -88,14 +96,26 @@
                 -ms-flex-direction: column;
                     flex-direction: column;
             margin-left: 20px; }
+            @media screen and (max-width: 375px) {
+              #iTunes .main-content .box-content.list-music .box-music-list .desc-box {
+                width: 60%; } }
+            @media screen and (max-width: 325px) {
+              #iTunes .main-content .box-content.list-music .box-music-list .desc-box {
+                width: 50%; } }
             #iTunes .main-content .box-content.list-music .box-music-list .desc-box .title {
               margin: 0;
               margin-bottom: 5px; }
             #iTunes .main-content .box-content.list-music .box-music-list .desc-box .artist {
               font-size: 14px;
               margin-bottom: 5px; }
+              @media screen and (max-width: 325px) {
+                #iTunes .main-content .box-content.list-music .box-music-list .desc-box .artist {
+                  font-size: 10px; } }
             #iTunes .main-content .box-content.list-music .box-music-list .desc-box .album {
               font-size: 10px; }
+              @media screen and (max-width: 325px) {
+                #iTunes .main-content .box-content.list-music .box-music-list .desc-box .album {
+                  font-size: 8px; } }
       #iTunes .main-content .box-content.music-player {
         position: absolute;
         height: auto;
@@ -220,6 +240,9 @@ body {
           box-shadow: 3px 3px 5px rgba(25, 25, 25, 0.5);
   -webkit-transition: .5s;
   transition: .5s; }
+  @media screen and (max-width: 375px) {
+    .button-play-circle {
+      right: 5% !important; } }
   .button-play-circle.hide {
     -webkit-transition: .5s;
     transition: .5s;
