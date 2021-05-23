@@ -55,7 +55,7 @@ class App extends React.Component {
                 ...this.state,
                 Config: {
                     ...this.state.Config,
-                    url: 'https://itunes.apple.com/search?term='+ this.state.SearchValue +'&limit=' + this.state.LimitMusic,
+                    url: 'https://itunes.apple.com/search?term='+ this.state.SearchValue +'&media=music&limit=' + this.state.LimitMusic,
                 }
             })
             setTimeout(() => {
@@ -119,6 +119,15 @@ class App extends React.Component {
 
     PlaySong = () => {
         this.state.Song.play()
+        let Range = document.querySelector('#music-duration')
+        
+        Range.addEventListener('change', () => {
+            this.state.Song.currentTime = Range.value
+        })
+    
+        this.state.Song.addEventListener('timeupdate', () => {
+            Range.value = this.state.Song.currentTime
+        })
     }
 
     StopSong = () => {
