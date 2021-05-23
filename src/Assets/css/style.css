@@ -105,6 +105,9 @@
             #iTunes .main-content .box-content.list-music .box-music-list .desc-box .title {
               margin: 0;
               margin-bottom: 5px; }
+              @media screen and (max-width: 325px) {
+                #iTunes .main-content .box-content.list-music .box-music-list .desc-box .title {
+                  font-size: 14px; } }
             #iTunes .main-content .box-content.list-music .box-music-list .desc-box .artist {
               font-size: 14px;
               margin-bottom: 5px; }
