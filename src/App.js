@@ -122,7 +122,7 @@ class App extends React.Component {
                 console.log(this.state.Song)
                 setTimeout(()=>{
                     // Define New Songs
-                    this.state.Song.src = this.state.DetailData.previewUrl
+                    this.state.Song.src = this.state.DetailData.hasOwnProperty('previewUrl') ? this.state.DetailData.previewUrl : ''
                     setTimeout(()=>{
                         this.state.Song.play()
                     }, 25)
@@ -140,7 +140,7 @@ class App extends React.Component {
             console.log(this.state.Song)
             setTimeout(()=>{
                 // Define New Songs
-                this.state.Song.src = this.state.DetailData.previewUrl
+                this.state.Song.src = this.state.DetailData.hasOwnProperty('previewUrl') ? this.state.DetailData.previewUrl : ''
                 setTimeout(()=>{
                     this.state.Song.play()
                 }, 25)
@@ -186,7 +186,7 @@ class App extends React.Component {
             console.log(this.state.Song)
             setTimeout(()=>{
                 // Define New Songs
-                this.state.Song.src = this.state.DetailData.previewUrl
+                this.state.Song.src = this.state.DetailData.hasOwnProperty('previewUrl') ? this.state.DetailData.previewUrl : ''
                 setTimeout(()=>{
                     this.state.Song.play()
                 }, 10)
@@ -202,6 +202,45 @@ class App extends React.Component {
 
         this.state.Song.addEventListener('timeupdate', () => {
             Range.value = this.state.Song.currentTime
+        })
+    }
+
+    NextButton = () => {
+        console.log('clicked next button')
+        this.setState({
+            IndexPlayer: this.state.IndexPlayer + 1
+        })
+
+        setTimeout(() => {
+            let setting = {
+                url: 'https://itunes.apple.com/lookup?id=' + this.state.ListMusic[this.state.IndexPlayer],
+                method: 'post',
+            }
+
+            Axios(setting).then((response) => {
+                this.setState({
+                    DetailData: response.data.results[0],
+                })
+            }).catch((err) =>{
+                console.log(err)
+            })
+
+            setTimeout(() => {
+                this.StopSong()
+                this.setState({
+                    MusicPlayer: true
+                })
+                setTimeout(() => {
+                    this.PlaySong()
+                }, 25)
+            },1000)
+        }, 10)
+    }
+
+    CloseMediaPlayer = () => {
+        this.StopSong()
+        this.setState({
+            MusicPlayer: false
         })
     }
 
@@ -223,18 +262,23 @@ class App extends React.Component {
                             {
                                 this.state.ResultData !== null ?
                                     this.state.ResultData.results.map((Data, index) => {
-                                        return(
-                                            <ListMusic
-                                                key={ index }
-                                                index={ index }
-                                                dataId={ Data.trackId }
-                                                images={ Data.artworkUrl100 }
-                                                titleSongs={ Data.trackName }
-                                                artistName={ Data.artistName }
-                                                album={ Data.collectionName }
-                                                trackClick={ this.TrackClick }
-                                            />
-                                        )
+                                        console.log('Data Number ' + index + ' : ', Data.previewUrl)
+                                        if ( Data.previewUrl !== null ) {
+                                            return(
+                                                <ListMusic
+                                                    key={ index }
+                                                    index={ index }
+                                                    dataId={ Data.collectionId }
+                                                    images={ Data.artworkUrl100 }
+                                                    titleSongs={ Data.collectionName }
+                                                    artistName={ Data.artistName }
+                                                    album={ Data.collectionName }
+                                                    trackClick={ this.TrackClick }
+                                                />
+                                            )
+                                        } else {
+                                            return('')
+                                        }
                                     })
                                 : <ListMusic />
                             }
@@ -251,7 +295,7 @@ class App extends React.Component {
                                 </div>
                                 <div className="box-player">
                                     <div className="description-music">
-                                        <h4 className="title-player">{ this.state.DetailData ? this.state.DetailData.trackName : ''}</h4>
+                                        <h4 className="title-player">{ this.state.DetailData ? this.state.DetailData.collectionName : ''}</h4>
                                         <span className="artist-name">
                                             <p>Artist : </p>
                                             { this.state.DetailData ? this.state.DetailData.artistName : '' }
@@ -268,9 +312,10 @@ class App extends React.Component {
                                     <button id="prev" className="prev">Prev</button>
                                     <button onClick={ this.PauseButton } id="pause" className="pause">Pause</button>
                                     <button onClick={ this.PlayButton } id="play" className="play">Play</button>
-                                    <button id="next" className="next">Next</button>
+                                    <button id="next" onClick={ this.NextButton } className="next">Next</button>
                                 </div>
                             </div>
+                            <div className="close-button" onClick={ this.CloseMediaPlayer }>X</div>
                         </div>
                     </div>
                 </div>

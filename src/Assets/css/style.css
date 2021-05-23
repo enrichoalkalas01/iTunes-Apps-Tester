@@ -192,6 +192,11 @@
                 border-radius: 10px;
                 border: none;
                 outline: none; }
+          #iTunes .main-content .box-content.music-player .wrapper-music-player .close-button {
+            position: absolute;
+            top: 10%;
+            right: 2.5%;
+            cursor: pointer; }
 
 body {
   margin: 0;
