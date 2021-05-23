@@ -46,7 +46,7 @@
             cursor: pointer; }
       #iTunes .main-content .box-content.list-music {
         width: auto;
-        height: 100%;
+        height: 75%;
         padding: 5px 10px;
         position: relative; }
         #iTunes .main-content .box-content.list-music .box-music-list {

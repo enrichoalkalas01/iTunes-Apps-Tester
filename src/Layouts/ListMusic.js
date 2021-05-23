@@ -18,6 +18,7 @@ const ListMusic = (props) => {
                 <span className="album">{ props.album }</span>
             </div>
             <div className="button-play-circle"><div className="triangle-button"></div></div>
+            {/* <div className="played-"></div> */}
         </div>
     )
 }

@@ -12,20 +12,18 @@ class App extends React.Component {
         IndexPlayer: 0,
         ListMusic: null,
         MusicPlayer: false,
-        PLayFast: false,
         Duration: 0,
         CurrentTime: 0,
         IsPLaying: true,
         Song: new Audio(),
         Config: {
-            url: 'https://itunes.apple.com/search?term="bruno mars"&limit=25',
+            url: 'https://itunes.apple.com/search?term=""&media=music&limit=25',
             method: 'post',
         },
     }
 
     async componentDidMount() {
         let DataIdMusic = []
-        this.MusicDefault()
 
         Axios(this.state.Config).then((response) => {
             console.log(response.data)
@@ -78,163 +76,39 @@ class App extends React.Component {
 
     TrackClick = (track) => {
         track.preventDefault()
-        let dataId = track.currentTarget.getAttribute('iddata')
-        let setting = {
-            url: 'https://itunes.apple.com/lookup?id=' + dataId,
-            method: 'post',
-        }
-
-        // Lookup Detail Songs
-        setTimeout(()=>{
-            Axios(setting).then((response) => {
-                this.setState({
-                    DetailData: response.data.results[0],
-                })
-            }).catch((err) => {
-                console.log(err)
-            })
-        },10)
-
-        setTimeout(() => {
-            this.StopSong()
-            this.setState({
-                MusicPlayer: true
-            })
-            setTimeout(() => {
-                this.PlaySong()
-            }, 25)
-        },1000)
-    }
-
-    MusicDefault = () => {
-        
-    }
-
-    PlaySong = (PlayFast = null) => {
-        let Range = document.querySelector('#music-duration')
-        // Get Auto Change And Auto Play Music When Clicked On Songs List
-        if ( PlayFast === 'clicked' ) {
-            // If Audio On Play
-            if ( this.state.IsPLaying ) {
-                this.StopSong()
-                console.log('Played A Song : ', this.state.IsPLaying)
-                console.log(this.state.DetailData.previewUrl)
-                console.log(this.state.Song)
-                setTimeout(()=>{
-                    // Define New Songs
-                    this.state.Song.src = this.state.DetailData.hasOwnProperty('previewUrl') ? this.state.DetailData.previewUrl : ''
-                    setTimeout(()=>{
-                        this.state.Song.play()
-                    }, 25)
-                }, 15)
-            } else {
-                this.setState({ IsPLaying: true })
-                console.log('Not Played : ', this.state.IsPLaying)
-            }
-        // When By Button Play
-        } else {
-            console.log('not clicked')
-            // Audio Will Play
-            console.log('Played A Song : ', this.state.IsPLaying)
-            console.log(this.state.DetailData.previewUrl)
-            console.log(this.state.Song)
-            setTimeout(()=>{
-                // Define New Songs
-                this.state.Song.src = this.state.DetailData.hasOwnProperty('previewUrl') ? this.state.DetailData.previewUrl : ''
-                setTimeout(()=>{
-                    this.state.Song.play()
-                }, 25)
-            }, 15)
-        }
-
-        Range.addEventListener('change', () => {
-            this.state.Song.currentTime = Range.value
+        let indexList = track.currentTarget.getAttribute('indexdata') // For Get Index List Music
+        this.setState({
+            DetailData: this.state.ResultData.results[indexList],
+            MusicPlayer: true,
+            IndexPlayer: indexList
         })
 
-        this.state.Song.addEventListener('timeupdate', () => {
-            Range.value = this.state.Song.currentTime
-        })
+        setTimeout(() => { this.state.Song.src = this.state.DetailData.previewUrl }, 25)
+        setTimeout(() => { this.PlaySong() }, 50)
+    }
+
+    PlaySong = () => {
+        this.state.Song.play()
+        console.log('Index Player : ', this.state.IndexPlayer)
     }
 
     StopSong = () => {
         this.state.Song.pause()
         this.state.Song.currentTime = 0
-        this.state.Song.removeAttribute('src')
-        // Checking Source Remove
-        console.log(this.state.Song)
+        this.state.Song.removeAttribute('src') // Make Sure That Audio Player Has Deleted Songs Source
     }
 
     PauseButton = () => {
-        let Range = document.querySelector('#music-duration')
         this.state.Song.pause()
-
-        Range.addEventListener('change', () => {
-            this.state.Song.currentTime = Range.value
-        })
-
-        this.state.Song.addEventListener('timeupdate', () => {
-            Range.value = this.state.Song.currentTime
-        })
     }
 
     PlayButton = () => {
-        let Range = document.querySelector('#music-duration')
-        if ( this.state.IsPLaying ) {
-            this.StopSong()
-            console.log('Played A Song : ', this.state.IsPLaying)
-            console.log(this.state.DetailData.previewUrl)
-            console.log(this.state.Song)
-            setTimeout(()=>{
-                // Define New Songs
-                this.state.Song.src = this.state.DetailData.hasOwnProperty('previewUrl') ? this.state.DetailData.previewUrl : ''
-                setTimeout(()=>{
-                    this.state.Song.play()
-                }, 10)
-            }, 5)
-        } else {
-            this.setState({ IsPLaying: true })
-            console.log('Not Played : ', this.state.IsPLaying)
-        }
-
-        Range.addEventListener('change', () => {
-            this.state.Song.currentTime = Range.value
-        })
-
-        this.state.Song.addEventListener('timeupdate', () => {
-            Range.value = this.state.Song.currentTime
-        })
+        this.StopSong()
+        setTimeout(() => { this.PlaySong() }, 25)
     }
 
     NextButton = () => {
-        console.log('clicked next button')
-        this.setState({
-            IndexPlayer: this.state.IndexPlayer + 1
-        })
-
-        setTimeout(() => {
-            let setting = {
-                url: 'https://itunes.apple.com/lookup?id=' + this.state.ListMusic[this.state.IndexPlayer],
-                method: 'post',
-            }
-
-            Axios(setting).then((response) => {
-                this.setState({
-                    DetailData: response.data.results[0],
-                })
-            }).catch((err) =>{
-                console.log(err)
-            })
-
-            setTimeout(() => {
-                this.StopSong()
-                this.setState({
-                    MusicPlayer: true
-                })
-                setTimeout(() => {
-                    this.PlaySong()
-                }, 25)
-            },1000)
-        }, 10)
+        
     }
 
     CloseMediaPlayer = () => {
@@ -262,22 +136,20 @@ class App extends React.Component {
                             {
                                 this.state.ResultData !== null ?
                                     this.state.ResultData.results.map((Data, index) => {
-                                        console.log('Data Number ' + index + ' : ', Data.previewUrl)
-                                        if ( Data.previewUrl !== null ) {
+                                        // Displaying For Data Who Has A Preview Audio URL
+                                        if ( Data.hasOwnProperty('previewUrl')) {
                                             return(
                                                 <ListMusic
                                                     key={ index }
                                                     index={ index }
                                                     dataId={ Data.collectionId }
                                                     images={ Data.artworkUrl100 }
-                                                    titleSongs={ Data.collectionName }
+                                                    titleSongs={ Data.trackName }
                                                     artistName={ Data.artistName }
                                                     album={ Data.collectionName }
                                                     trackClick={ this.TrackClick }
                                                 />
                                             )
-                                        } else {
-                                            return('')
                                         }
                                     })
                                 : <ListMusic />
