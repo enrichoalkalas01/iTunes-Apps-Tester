@@ -28,7 +28,7 @@
           display: -ms-flexbox;
           display: flex; }
           #iTunes .main-content .box-content.search-box .search-bar input {
-            width: 85%;
+            width: 100%;
             margin-right: 10px;
             outline: none;
             background-color: #f1f1f1;

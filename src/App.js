@@ -193,7 +193,7 @@ class App extends React.Component {
                     <div className="box-content search-box">
                         <div className="search-bar">
                             <input onKeyDown={ this.OnEnterKey } name="search-bar" id="search-bar" placeholder="search your music.." />
-                            <button type="button" onClick={ this.SearchValue }>Search</button>
+                            {/* <button type="button" onClick={ this.SearchValue }>Search</button> */}
                         </div>
                     </div>
                     <div className="box-content list-music">
