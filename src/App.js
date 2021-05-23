@@ -10,6 +10,7 @@ class App extends React.Component {
         SearchValue: '',
         LimitMusic: 25,
         IndexPlayer: 0,
+        LastIndexPlayer: 0,
         ListMusic: null,
         MusicPlayer: false,
         Duration: 0,
@@ -39,14 +40,15 @@ class App extends React.Component {
                 this.setState({
                     ListMusic: DataIdMusic
                 })
-            }, 25)
+            }, 5)
         }).catch((error) => {
             console.log(error)
         })
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        console.log(this.state.ListMusic)
+        
+        // Change Search Index
         if ( prevState.SearchValue !== this.state.SearchValue ) {
             this.setState({
                 ...this.state,
@@ -67,6 +69,23 @@ class App extends React.Component {
                 })
             }, 25)
         }
+
+        // Changed Icon When Index Player Has Change
+        if ( prevState.IndexPlayer !== this.state.IndexPlayer ) {
+
+            // When Play, Circle Got Hiding
+            document.querySelector('#list-'+ this.state.IndexPlayer +' .button-play-circle').classList.add('hide')
+            // After Circle Hiding, Wave Indexed Got Show
+            document.querySelector('#list-'+ this.state.IndexPlayer +' .button-play-wave').classList.remove('hide')
+
+            // Previous Index Icon Got Normal Again
+            this.setState({ LastIndexPlayer: prevState.IndexPlayer })
+            if ( prevState.IndexPlayer !== this.state.LastIndexPlayer ) {
+                
+                document.querySelector('#list-'+ prevState.IndexPlayer +' .button-play-circle').classList.remove('hide')
+                document.querySelector('#list-'+ prevState.IndexPlayer +' .button-play-wave').classList.add('hide')
+            }
+        }
     }
 
     SearchValue = () => {
@@ -83,12 +102,18 @@ class App extends React.Component {
             IndexPlayer: indexList
         })
 
-        setTimeout(() => { this.state.Song.src = this.state.DetailData.previewUrl }, 25)
-        setTimeout(() => { this.PlaySong() }, 50)
+        setTimeout(() => { 
+            this.state.Song.src = this.state.DetailData.previewUrl 
+        }, 5)
+        setTimeout(() => { this.PlaySong() }, 10)
+
+        
+        
+        // document.querySelector('.box-music-list .button-play-wave').classList.remove('hide')
     }
 
     PlaySong = () => {
-        this.state.Song.play()
+        // this.state.Song.play()
         console.log('Index Player : ', this.state.IndexPlayer)
     }
 
@@ -100,6 +125,8 @@ class App extends React.Component {
 
     PauseButton = () => {
         this.state.Song.pause()
+        document.querySelector('.box-music-list .button-play-wave').classList.add('hide')
+        document.querySelector('.box-music-list .button-play-circle').classList.remove('hide')
     }
 
     PlayButton = () => {
@@ -167,7 +194,7 @@ class App extends React.Component {
                                 </div>
                                 <div className="box-player">
                                     <div className="description-music">
-                                        <h4 className="title-player">{ this.state.DetailData ? this.state.DetailData.collectionName : ''}</h4>
+                                        <h4 className="title-player">{ this.state.DetailData ? this.state.DetailData.trackName : ''}</h4>
                                         <span className="artist-name">
                                             <p>Artist : </p>
                                             { this.state.DetailData ? this.state.DetailData.artistName : '' }

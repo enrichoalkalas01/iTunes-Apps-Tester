@@ -40,3 +40,7 @@ PauseButton = () => {
         Range.value = this.state.Song.currentTime
     })
 }
+
+// Change Icon Play List
+let WaveIndexIcon = document.querySelector('.list-number-' + this.state.IndexPlayer + ' .button-play-circle').classList.add('hide')
+let PlayIndexIcon = document.querySelector('.list-number-' + this.state.IndexPlayer + ' .button-play-wave')

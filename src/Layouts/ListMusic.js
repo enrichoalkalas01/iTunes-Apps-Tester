@@ -8,6 +8,7 @@ const ListMusic = (props) => {
             onClick={ props.trackClick }
             indexdata={ props.index }
             iddata={ props.dataId }
+            id={ "list-" + props.index }
         >
             <div className="images-box">
                 <div className="images" style={{ backgroundImage: "url(" + props.images + ")" }}></div>
@@ -18,7 +19,7 @@ const ListMusic = (props) => {
                 <span className="album">{ props.album }</span>
             </div>
             <div className="button-play-circle"><div className="triangle-button"></div></div>
-            {/* <div className="played-"></div> */}
+            <div className="button-play-wave hide"><i className="fas fa-wave-square"></i></div>
         </div>
     )
 }

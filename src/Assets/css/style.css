@@ -217,7 +217,26 @@ body {
       -ms-flex-align: center;
           align-items: center;
   -webkit-box-shadow: 3px 3px 5px rgba(25, 25, 25, 0.5);
-          box-shadow: 3px 3px 5px rgba(25, 25, 25, 0.5); }
+          box-shadow: 3px 3px 5px rgba(25, 25, 25, 0.5);
+  -webkit-transition: .5s;
+  transition: .5s; }
+  .button-play-circle.hide {
+    -webkit-transition: .5s;
+    transition: .5s;
+    display: none; }
+
+.button-play-wave {
+  -webkit-transition: .5s;
+  transition: .5s;
+  position: absolute;
+  right: 2.5%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%); }
+  .button-play-wave.hide {
+    -webkit-transition: .5s;
+    transition: .5s;
+    display: none; }
 
 .triangle-button {
   width: 0px;
