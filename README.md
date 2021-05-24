@@ -29,7 +29,7 @@ Layout : Desktop and Mobile
     - From npm start management ( use your whole file without build )
 10. And deploy to your server
 
-# ## =================== ## =================== ##
+# ============= ## =============
 
 # Getting Started with Create React App
 
