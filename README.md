@@ -1,3 +1,36 @@
+# Support Devices
+Web Browser
+Layout : Desktop and Mobile
+
+# Support Features
+- Play Preview Songs
+- Search Songs
+- Pause, Next, Previous
+
+# Requirment To Build App
+- Node JS For NPM
+- React JS
+- Font Awesome
+- Sass
+- Axios Library
+- State Management
+
+# Instructions To Build And Deploy The App
+1. Install Node JS
+2. Create React Apps
+3. Intsall library for supports like axios, router, and others that support your device
+4. Build Template Components for your reuseable components ( Music Player, List Music, etc )
+5. Build Layouts Root for place the template components
+6. Build State Management for make your data passing more easier
+7. Build function template like search, play, stop, next, previous and others thats make your features great
+8. If your done with your apps build, use npm run build for making the apps more simple from npm run build render
+9. You can choose the type of your apps build to deploy
+    - From npm run build ( use index.html file )
+    - From npm start management ( use your whole file without build )
+10. And deploy to your server
+
+# ## =================== ## =================== ##
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
